@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#" style="font-weight: bolder;">Address Book Application</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/display">Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="">Link</a>
+            </li>
+        </ul>
+    </div>
+    <a class="btn btn-info d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" routerLink="/add">Add new Address</a>
+</nav>
+
+
+<div class="container">
+    <h2>Address Book Dashboard</h2>
+    
+    <table class="table table-bordered">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>Actions</th>
+        </tr>
+        <tr *ngFor='let person of data'>
+            <td>{{person.id}}</td>
+            <td>{{person.name}}</td>
+            <td>{{person.email}}</td>
+            <td>{{person.gender}}</td>
+            <td>{{person.address}}</td>
+            <td>{{person.city}}</td>
+            <td>
+                <a routerLink="/update/{{person.id}}"><i class="fa fa-edit" style="font-size:24px; color:blueviolet; cursor: pointer;"></i></a> &nbsp;
+                <i (click)="deleteAddress(person.id)" class="fa fa-trash" style="font-size:24px;color:red; cursor: pointer; "></i>
+            </td>
+        </tr>
+    </table>
+
+    <router-outlet></router-outlet>
+</div>
