@@ -1,25 +1,44 @@
 <div class="container">
 
-    <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Success!</strong> New Address Successfully created in Database.
+    <div *ngIf="status && isAddMode" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong> Sorry Error!</strong> Address is not added to database.
         <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-    
+    </div>
+    <div *ngIf="status && !isAddMode" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Sorry Error!</strong> Address is not updated in database.
+        <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
     <div class="col-md-5 offset-md-3">
         <h2 *ngIf="isAddMode">Add Address Form</h2>
         <h2 *ngIf="!isAddMode"> Address Edit Form</h2>
-        
+
         <form [formGroup]="addAddress" (ngSubmit)="onSubmit()">
             <input type="hidden" formControlName="id">
             <div class="form-group">
-                <label for="exampleInputEmail1">Name</label>
-                <input type="email" class="form-control" formControlName="name" required placeholder="Enter Your Name">
+                <label for="InputName" class="required">Name</label>
+                <input type="text" class="form-control" formControlName="name" required placeholder="Enter Your Name">
+                <div *ngIf="addAddress.controls['name'].invalid && addAddress.controls['name'].touched"
+                    class="alert alert-danger">
+                    <div *ngIf="addAddress.controls['name'].errors.required">
+                        Name is required.
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" formControlName="email" required email placeholder="Enter Email">
+                <label for="InputEmail">Email address</label>
+                <input type="email" class="form-control" formControlName="email" email placeholder="Enter Email">
+                <div *ngIf="addAddress.controls['email'].invalid && addAddress.controls['email'].touched"
+                    class="alert alert-danger">
+                    <div
+                        *ngIf="addAddress.controls['email'].errors.required || addAddress.controls['email'].errors.email || addAddress.controls['email'].errors.pattern">
+                        Valid Email is required.
+                    </div>
+                </div>
             </div>
             Gender:
             <div class="form-check">
@@ -35,10 +54,16 @@
                 </label>
             </div>
             <label>Street address</label>
-            <input type="text" class="form-control" formControlName="address" placeholder="Enter Street Address" required>
-    
+            <input type="text" class="form-control" formControlName="address" placeholder="Enter Street Address"
+                required>
+            <div *ngIf="addAddress.controls['address'].invalid && addAddress.controls['address'].touched"
+                class="alert alert-danger">
+                <div *ngIf="addAddress.controls['address'].errors.required">
+                    Street Address is required.
+                </div>
+            </div>
             <br>
-    
+
             <label for="city">Choose a City: </label>
             <select formControlName="city" id="city">
                 <option disabled selected>Your City</option>
@@ -48,7 +73,7 @@
                 <option value="Quetta">Quetta</option>
                 <option value="Peshawar">Peshawar</option>
             </select>
-    
+
             <br>
             <div class="row justify-content-around">
                 <div class="col-4">
@@ -58,13 +83,14 @@
                     <button type="reset" class="btn btn-info">Reset</button>
                 </div>
                 <div class="col-4">
-                    <button  *ngIf="isAddMode" type="submit" class="btn btn-primary">Submit</button>
-                    <button  *ngIf="!isAddMode" type="submit" class="btn btn-primary">Update</button>
+                    <button *ngIf="isAddMode" [disabled]="addAddress.invalid" type="submit"
+                        class="btn btn-primary">Submit</button>
+                    <button *ngIf="!isAddMode" [disabled]="addAddress.invalid" type="submit" class="btn btn-primary">Update</button>
                 </div>
-    
             </div>
-    
-    
+            <div *ngIf="addAddress.invalid" class="alert alert-danger">
+                Enter valid data to submit form
+            </div>
         </form>
     </div>
-    </div>
+</div>
