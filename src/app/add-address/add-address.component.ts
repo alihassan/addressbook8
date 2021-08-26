@@ -20,7 +20,7 @@ export class AddAddressComponent implements OnInit {
     gender: new FormControl('Male'),
     address: new FormControl(''),
     city: new FormControl('Your City'),
-  })
+  });
   alert = false;
   closeAlert() {
     this.alert = false;
@@ -35,10 +35,10 @@ export class AddAddressComponent implements OnInit {
     this.id = this.route.snapshot.params.id;
     this.isAddMode = !this.id;
     // Condition if add mode then not to fetcch data from database
-    if(!this.isAddMode){
+    if (!this.isAddMode) {
     this.personService.getByID(this.id).subscribe((result) => {
-      this.addAddress.setValue(result)
-    })
+      this.addAddress.setValue(result);
+    });
   }
   }
 
@@ -54,8 +54,8 @@ export class AddAddressComponent implements OnInit {
     return this.personService.savetodb(this.addAddress.value).subscribe(() => {
       // console.log("Data Entered Successfull to DB")
       alert('Address Added to Database Successfully');
-      this.router.navigate(['display'])
-    })
+      this.router.navigate(['display']);
+    });
 
   }
   updateUser() {
