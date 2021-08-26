@@ -34,9 +34,12 @@ export class AddAddressComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
+    //Condition if add mode then not to fetcch data from database
+    if(!this.isAddMode){
     this.personService.getByID(this.id).subscribe((result) => {
       this.addAddress.setValue(result)
     })
+  }
   }
 
   onSubmit() {
@@ -56,7 +59,7 @@ export class AddAddressComponent implements OnInit {
 
   }
   updateUser() {
-    console.log("item", this.addAddress.value)
+    //console.log("item", this.addAddress.value)
     return this.personService.updateAddress(this.id, this.addAddress.value).subscribe(() => {
       //console.log("Updated")
       alert('Address updated in Database Successfully');

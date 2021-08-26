@@ -15,7 +15,7 @@ export class DisplayAddressComponent implements OnInit {
     
     this.person.getApidata().subscribe((obj: any) => {
       this.data = obj;
-      console.log(obj)
+     // console.log(obj)
     })
   }
   deleteAddress(id:number){
