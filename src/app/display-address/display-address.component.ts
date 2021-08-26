@@ -8,21 +8,30 @@ import { PersonService } from '../service/person.service';
 })
 export class DisplayAddressComponent implements OnInit {
   data: any;
+  status = false;
 
-  constructor(private person: PersonService) {}
+  constructor(private person: PersonService) { }
+
+  closeAlert() {
+    this.status = false;
+  }
 
   ngOnInit(): void {
-    
+
     this.person.getApidata().subscribe((obj: any) => {
       this.data = obj;
-     // console.log(obj)
-    })
+      // console.log(obj)
+    },
+      (error) => {
+        this.status = true;
+        console.log('myError = ' + error.message);
+      });
   }
-  deleteAddress(id:number){
-    if(window.confirm('Are sure you want to delete this Address ?')){
-      this.person.deleteAddress(id).subscribe(()=>{
-      window.location.reload();
-    })
+  deleteAddress(id: number) {
+    if (window.confirm('Are sure you want to delete this Address ?')) {
+      this.person.deleteAddress(id).subscribe(() => {
+        window.location.reload();
+      });
     }
   }
 }

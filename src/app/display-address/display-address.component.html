@@ -24,7 +24,14 @@
 
 <div class="container">
     <h2>Address Book Dashboard</h2>
-    
+
+    <div *ngIf="status" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong> Sorry Error!</strong> Not able to Connect with Database.
+        <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
     <table class="table table-bordered">
         <tr>
             <th>Id</th>
@@ -43,8 +50,10 @@
             <td>{{person.address}}</td>
             <td>{{person.city}}</td>
             <td>
-                <a routerLink="/update/{{person.id}}"><i class="fa fa-edit" style="font-size:24px; color:blueviolet; cursor: pointer;"></i></a> &nbsp;
-                <i (click)="deleteAddress(person.id)" class="fa fa-trash" style="font-size:24px;color:red; cursor: pointer; "></i>
+                <a routerLink="/update/{{person.id}}"><i class="fa fa-edit"
+                        style="font-size:24px; color:blueviolet; cursor: pointer;"></i></a> &nbsp;
+                <i (click)="deleteAddress(person.id)" class="fa fa-trash"
+                    style="font-size:24px;color:red; cursor: pointer; "></i>
             </td>
         </tr>
     </table>
