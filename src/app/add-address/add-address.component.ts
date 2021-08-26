@@ -10,8 +10,8 @@ import { PersonService } from '../service/person.service';
 })
 export class AddAddressComponent implements OnInit {
 
-  id: number = 0;
-  isAddMode: boolean = true;
+  id = 0;
+  isAddMode = true;
 
   addAddress = new FormGroup({
     id: new FormControl(),
@@ -21,7 +21,7 @@ export class AddAddressComponent implements OnInit {
     address: new FormControl(''),
     city: new FormControl('Your City'),
   })
-  alert: boolean = false;
+  alert = false;
   closeAlert() {
     this.alert = false;
   }
@@ -32,9 +32,9 @@ export class AddAddressComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params.id;
     this.isAddMode = !this.id;
-    //Condition if add mode then not to fetcch data from database
+    // Condition if add mode then not to fetcch data from database
     if(!this.isAddMode){
     this.personService.getByID(this.id).subscribe((result) => {
       this.addAddress.setValue(result)
@@ -52,19 +52,19 @@ export class AddAddressComponent implements OnInit {
 
   createUser() {
     return this.personService.savetodb(this.addAddress.value).subscribe(() => {
-      //console.log("Data Entered Successfull to DB")
+      // console.log("Data Entered Successfull to DB")
       alert('Address Added to Database Successfully');
       this.router.navigate(['display'])
     })
 
   }
   updateUser() {
-    //console.log("item", this.addAddress.value)
+    // console.log("item", this.addAddress.value)
     return this.personService.updateAddress(this.id, this.addAddress.value).subscribe(() => {
-      //console.log("Updated")
+      // console.log("Updated")
       alert('Address updated in Database Successfully');
-      this.router.navigate(['display'])
-    })
+      this.router.navigate(['display']);
+    });
   }
 
 }
